@@ -1,6 +1,3 @@
-class MemoriaDinamica:
-    def main(self, args):
-        
         frutas = []
         
         frutas.append("Mango")
@@ -19,6 +16,3 @@ class MemoriaDinamica:
         frutas.append("sandia")
         
         print(frutas)
-
-if __name__ == "__main__":
-    MemoriaDinamica().main([])
