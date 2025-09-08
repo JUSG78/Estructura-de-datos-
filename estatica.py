@@ -1,4 +1,4 @@
-calificaciones = [0] * 5
+calificaciones = [0]
 
 for i in range(5):
     while True:
@@ -11,4 +11,5 @@ for i in range(5):
 
 for i, calificacion in enumerate(calificaciones):
     print(f"Calificación {i+1} = {calificacion}")
+
 
