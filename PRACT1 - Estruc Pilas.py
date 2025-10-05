@@ -28,7 +28,7 @@ pila.insertar('X')
 pila.insertar('Y')
 pila.eliminar()
 pila.eliminar()
-pila.eliminar()  # Este debería generar un error de subdesbordamiento
+pila.eliminar() 
 pila.insertar('V')
 pila.insertar('W')
 pila.eliminar()
@@ -36,3 +36,4 @@ pila.insertar('R')
 
 # Estado final de la pila
 print(f"Elementos finales en la pila: {pila.pila} (TOPE={pila.tope})")
+
