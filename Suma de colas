@@ -1,0 +1,27 @@
+from collections import deque
+
+def sumar_colas(cola_a, cola_b):
+    cola_resultado = deque()
+    
+    while cola_a and cola_b:  # Mientras ambas tengan elementos
+        a = cola_a.popleft()
+        b = cola_b.popleft()
+        cola_resultado.append(a + b)
+    
+    return cola_resultado
+
+
+# Ejemplo de uso
+cola1 = deque([4, 6, 2, 5])
+cola2 = deque([3, 9, 1, 2])
+
+# Imprimir colas originales ANTES de la suma
+print("Cola1 original (antes):", list(cola1))
+print("Cola2 original (antes):", list(cola2))
+
+resultado = sumar_colas(cola1, cola2)
+print("Cola resultado:", list(resultado))
+
+# Imprimir colas originales DESPUÉS de la suma (se modifican/vacían)
+print("Cola1 después:", list(cola1))
+print("Cola2 después:", list(cola2))
