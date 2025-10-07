@@ -1,0 +1,81 @@
+from collections import deque
+from typing import Union
+
+class ColaSeguros:
+
+    def __init__(self):
+        self.cola_A: deque[int] = deque()
+        self.cola_B: deque[int] = deque()
+
+    def agregar_cliente(self, letra: str, numero: Union[int, str]) -> None:
+        if not isinstance(numero, int) or numero <= 0:
+            raise ValueError(f"Número de cliente inválido: debe ser entero positivo, no {numero}")
+        
+        letra = letra.upper()
+        if letra == 'A':
+            self.cola_A.append(numero)
+            print(f"Cliente {numero} agregado a Cola A.")
+        elif letra == 'B':
+            self.cola_B.append(numero)
+            print(f"Cliente {numero} agregado a Cola B.")
+        else:
+            raise ValueError("Letra inválida. Solo se permite 'A' o 'B'.")
+
+    def atender_cliente(self, letra: str) -> None:
+        colas = {'A': self.cola_A, 'B': self.cola_B}
+        letra = letra.upper()
+
+        if letra not in colas:
+            raise ValueError("Letra inválida. Solo se permite 'A' o 'B'.")
+
+        if colas[letra]:
+            atendido = colas[letra].popleft()
+            print(f"Atendido cliente de Cola {letra}: {atendido}")
+        else:
+            print(f"Cola {letra} está vacía. No hay clientes para atender.")
+
+    def mostrar_estado(self) -> None:
+        print(f"Cola A actual: {list(self.cola_A)} (total: {len(self.cola_A)})")
+        print(f"Cola B actual: {list(self.cola_B)} (total: {len(self.cola_B)})")
+
+    def clientes_totales(self) -> int:
+        return len(self.cola_A) + len(self.cola_B)
+
+    def esta_vacia(self, letra: str) -> bool:
+        letra = letra.upper()
+        if letra == 'A':
+            return len(self.cola_A) == 0
+        elif letra == 'B':
+            return len(self.cola_B) == 0
+        else:
+            raise ValueError("Letra inválida. Solo se permite 'A' o 'B'.")
+
+
+if __name__ == "__main__":
+    sistema = ColaSeguros()
+    
+    sistema.agregar_cliente('A', 1)
+    sistema.agregar_cliente('B', 2)
+    sistema.agregar_cliente('A', 3)
+    sistema.mostrar_estado()
+    print(f"Total clientes: {sistema.clientes_totales()}")
+    
+    sistema.atender_cliente('A')
+    sistema.mostrar_estado()
+    print(f"Total clientes: {sistema.clientes_totales()}")
+    
+    sistema.atender_cliente('B')
+    sistema.atender_cliente('B')
+    
+    try:
+        sistema.agregar_cliente('C', 4)
+    except ValueError as e:
+        print(f"Error esperado: {e}")
+    
+    try:
+        sistema.agregar_cliente('A', -1)
+    except ValueError as e:
+        print(f"Error esperado: {e}")
+    
+    print(f"¿Cola A vacía? {sistema.esta_vacia('A')}")
+    print(f"¿Cola B vacía? {sistema.esta_vacia('B')}")
