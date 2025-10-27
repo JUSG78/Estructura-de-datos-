@@ -1,0 +1,104 @@
+from abc import ABC, abstractmethod
+
+class Order:
+    def __init__(self, qtty, customer):
+        self._customer = customer
+        self._qtty = qtty
+
+    def print(self):
+        print("     Customer:", self.getCustomer())
+        print("     Quantity:", self.getQtty())
+        print("     ------------")
+
+    def getQtty(self):
+        return self._qtty
+
+    def getCustomer(self):
+        return self._customer
+
+
+class QueueInterface(ABC):
+    @abstractmethod
+    def size(self):
+        pass
+
+    @abstractmethod
+    def isEmpty(self):
+        pass
+
+    @abstractmethod
+    def front(self):
+        pass
+
+    @abstractmethod
+    def enqueue(self, info):
+        pass
+
+    @abstractmethod
+    def dequeue(self):
+        pass
+
+
+class Node:
+    def __init__(self, info):
+        self.info = info
+        self.next = None
+
+    def getNext(self):
+        return self.next
+
+
+class LinkedQueue(QueueInterface):
+    def __init__(self):
+        self.top = None
+        self.tail = None
+        self._size = 0
+
+    def size(self):
+        return self._size
+
+    def isEmpty(self):
+        return self._size == 0
+
+    def front(self):
+        if self.isEmpty():
+            return None
+        return self.top.info
+
+    def enqueue(self, info):
+        newNode = Node(info)
+        if self.isEmpty():
+            self.top = newNode
+        else:
+            self.tail.next = newNode
+        self.tail = newNode
+        self._size += 1
+
+    def dequeue(self):
+        if self.isEmpty():
+            return None
+        info = self.top.info
+        self.top = self.top.next
+        self._size -= 1
+        if self.isEmpty():
+            self.tail = None
+        return info
+
+    def printQueue(self):
+        node = self.top
+        while node is not None:
+            if hasattr(node.info, 'print'):
+                node.info.print()
+            else:
+                print(node.info)
+            node = node.getNext()
+
+
+if __name__ == "__main__":
+    queue = LinkedQueue()
+    queue.enqueue(Order(3, "Juan"))
+    queue.enqueue(Order(5, "Ana"))
+    queue.enqueue(Order(2, "Luis"))
+
+    print("Pedidos en cola:")
+    queue.printQueue()
